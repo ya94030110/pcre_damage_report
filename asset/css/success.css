@@ -1,0 +1,12 @@
+#photo{
+    width: 660px;
+    height: 330px;
+    margin:auto;
+}
+
+#message{
+    text-align:center;
+    font-family:DFKai-sb;
+    font-size: 24px;
+    padding-top:25px;
+}
