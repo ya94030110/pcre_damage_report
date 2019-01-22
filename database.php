@@ -34,11 +34,6 @@ function sendDamage(
     $sql=sprintf("INSERT into damage_backup(player,day,battle,round,boss,damage,compensate) values('%d','%d','%d','%d','%d','%d','%d');",$player,$day,$battle,$round,$boss,$damage,$compensate);
     $conn->query($sql);
 }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 9d25d88d2422d5421f2b8d276b828deca2b3f9a1
-
 
 function getDamage($player_id) {
     $mysqli = new mysqli('den1.mysql1.gear.host', 'pcre', 'Sd4A_25Ob9K-', 'pcre');
@@ -92,8 +87,3 @@ function debug_to_console( $data, $context = 'Debug in Console' ) {
 
     echo $output;
 }
-<<<<<<< HEAD
-=======
-=======
->>>>>>> dc17f419e20cd0c1b62ec13cd775355ac6e56d3d
->>>>>>> 9d25d88d2422d5421f2b8d276b828deca2b3f9a1
