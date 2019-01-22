@@ -34,6 +34,7 @@ function sendDamage(
     $sql=sprintf("INSERT into damage_backup(player,day,battle,round,boss,damage,compensate) values('%d','%d','%d','%d','%d','%d','%d');",$player,$day,$battle,$round,$boss,$damage,$compensate);
     $conn->query($sql);
 }
+<<<<<<< HEAD
 
 
 function getDamage($player_id) {
@@ -88,3 +89,5 @@ function debug_to_console( $data, $context = 'Debug in Console' ) {
 
     echo $output;
 }
+=======
+>>>>>>> dc17f419e20cd0c1b62ec13cd775355ac6e56d3d
