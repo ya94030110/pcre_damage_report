@@ -5,8 +5,8 @@ var day = 0;
 var send;
 var success;
 
-var players = ["初音的哈士貓", "沒人愛的丁丁丁丁丁丁", "(¯‧ω‧¯)", "達拉崩巴(NPC)", "綰逸", "神弒月", "Fobis", "好吃布丁", "苦搜game", "綠茶愛咖啡", "小紫", "かほ", "勤勉先生", "琉璃", "Silence", "小頑童", "塔卡", "Lamo(NPC)", "風華", "Turlock", "戰隊孤兒", "水蛋", "把你斬成兩半", "99期生娜娜(缺瑪娜", "Chaos", "漂流弦月", "朧月", "一擊桃樂絲", "星菲的紡希是最可愛的", "住在非洲的歐洲人"];
-var days=["1/22", "1/23", "1/24", "1/25", "1/26", "1/27", "1/28", "1/29", "1/30"];
+var players = ["------", "初音的哈士貓", "沒人愛的丁丁丁丁丁丁", "(¯‧ω‧¯)", "達拉崩巴(NPC)", "綰逸", "神弒月", "Fobis", "好吃布丁", "苦搜game", "綠茶愛咖啡", "小紫", "かほ", "勤勉先生", "琉璃", "Silence", "小頑童", "塔卡", "Lamo(NPC)", "風華", "Turlock", "戰隊孤兒", "水蛋", "把你斬成兩半", "99期生娜娜(缺瑪娜", "Chaos", "漂流弦月", "朧月", "一擊桃樂絲", "星菲的紡希是最可愛的", "住在非洲的歐洲人"];
+var days=["------", "1/22", "1/23", "1/24", "1/25", "1/26", "1/27", "1/28", "1/29", "1/30"];
 var boss = ["龍", "鳥", "死靈領主", "巨人", "處女座"];
 window.onload = function()
 {
@@ -35,8 +35,18 @@ window.onload = function()
 function submit_function(event)
 {
     document.getElementById("confirm-button").removeEventListener("click", confirm_function);
-    player = players.indexOf($('#name-dropdown :selected').text()) + 1;
-    day = days.indexOf($('#day-dropdown :selected').text()) + 1;
+    player = players.indexOf($('#name-dropdown :selected').text());
+    day = days.indexOf($('#day-dropdown :selected').text());
+    if(player == 0)
+    {
+        alert("必須選擇玩家名稱");
+        return;
+    }
+    if(day == 0)
+    {
+        alert("必須選擇日期");
+        return;
+    }
     if(getInfo(battle1, "round1", "Radio1", "damage1") == 0) return;
     if(getInfo(battle1_compensate, "compensation-round1", "compensation-Radio1", "compensation-damage1") == 0) return;
     if(getInfo(battle2, "round2", "Radio2", "damage2") == 0) return;
@@ -48,11 +58,11 @@ function submit_function(event)
     while(message.firstChild) message.removeChild(message.firstChild);
     
     var name_message = document.createElement("p");
-    name_message.innerHTML = "玩家名稱: " + players[player - 1];
+    name_message.innerHTML = "玩家名稱: " + players[player];
     message.appendChild(name_message);
     
     var day_message = document.createElement("p");
-    day_message.innerHTML = "日期: " + days[day - 1];
+    day_message.innerHTML = "日期: " + days[day];
     message.appendChild(day_message);
     
     getMessage(battle1, message, "第一刀");
@@ -105,23 +115,23 @@ function confirm_function(event)
     else $('#myModal').modal('hide');
 }
 
-function getInfo(battle, round_input, boss_radio, damage_input)
+function getInfo(battle, round_radio, boss_radio, damage_input)
 {
-    if(isNaN(document.getElementById(round_input).value))
-    {
-        alert("周目數必須為數字");
-        document.getElementById(round_input).focus();
-        return 0;
-    }
-    if(document.getElementById(round_input).value == "") return 1;
-    battle.setRound(document.getElementById(round_input).value);
-    var radio1 = document.getElementsByName(boss_radio);
-    for(i = 0; i < radio1.length; i++) if(radio1[i].checked) battle.setBoss(i);
+    var radio1 = document.getElementsByName(round_radio);
+    for(i = 0; i < radio1.length; i++) if(radio1[i].checked) battle.setRound(i);
+    var radio2 = document.getElementsByName(boss_radio);
+    for(i = 0; i < radio2.length; i++) if(radio2[i].checked) battle.setBoss(i);
     if(isNaN(document.getElementById(damage_input).value))
     {
         alert("傷害必須為數字");
         document.getElementById(damage_input).focus();
         return 0;
+        if(document.getElementById(damage_input).value & 1 != 0 || document.getElementById(damage_input).value < 0)
+        {
+            alert("傷害必須為非負整數");
+            document.getElementById(damage_input).focus();
+            return 0;
+        }
     }
     if(document.getElementById(damage_input).value == "")return 1;
     battle.setDamage(document.getElementById(damage_input).value);
@@ -133,7 +143,7 @@ function getMessage(battle, message, battle_name)
     //console.log(battle.getDamage());
     if(battle.Empty() == 1) return;
     var battle_message = document.createElement("p");
-    battle_message.innerHTML = battle_name + ":<br>" + battle.getRound() + "周目 " + boss[battle.getBoss() - 1] + " 傷害: " + battle.getDamage();
+    battle_message.innerHTML = battle_name + ":<br>" + "第" + battle.getRound() + "階段 " + boss[battle.getBoss() - 1] + " 傷害: " + battle.getDamage();
     message.appendChild(battle_message);
 }
 

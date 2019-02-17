@@ -28,14 +28,18 @@ function showDamage(damage_array)
     {
         var day = days[damage_array[i]['day'] - 1],
             battle_neme = "",
-            boss_name = boss[damage_array[i]['boss'] - 1];
+            boss_name = boss[damage_array[i]['boss'] - 1],
+            round_name;
         if(damage_array[i]['battle'] == 1) battle_neme+="第一刀";
         if(damage_array[i]['battle'] == 2) battle_neme+="第二刀";
         if(damage_array[i]['battle'] == 3) battle_neme+="第三刀";
-        if(damage_array[i]['compensate'] == 1) battle_neme += "補償刀";
+        //if(damage_array[i]['compensate'] == 1) battle_neme += "補償刀";
+        
+        if(damage_array[i]['round'] == 1) round_name = "第一階段";
+        else round_name = "第二階段";
         
         var message = document.createElement("p");
-        message.innerHTML = day + " " + battle_neme + ": " + damage_array[i]['round'] + "周目" + boss_name + " 傷害: " + damage_array[i]['damage'];
+        message.innerHTML = day + " " + battle_neme + ": " + round_name + boss_name + " 傷害: " + damage_array[i]['damage'];
         document.getElementById("damage-list").appendChild(message);
     }
 }

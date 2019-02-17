@@ -35,6 +35,7 @@ function sendDamage(
     $conn->query($sql);
 }
 
+
 function getDamage($player_id) {
     $mysqli = new mysqli('den1.mysql1.gear.host', 'pcre', 'Sd4A_25Ob9K-', 'pcre');
 	if($mysqli->connect_error){
